@@ -226,6 +226,8 @@ FastaFile.open(opts[:protein_alignment]).
                opts[:aa_orfs],
                opts[:protein_alignment]
 
+  aln_seq.gsub!(/~/, "-")
+
   if ident_seqs.has_key? aln_head
     nt_headers = ident_seqs[aln_head]
 
@@ -256,13 +258,18 @@ FastaFile.open(opts[:protein_alignment]).
                     nt_head,
                     nt_orf[0..2].join
         elsif i.zero? && c != "M" && nt_orf[0..2].join == "ATG"
+          # TODO these ones end up shorter by 3 than the other
+          # alignments
           Utils.log "AA aln '%s' starts with '%c' but nt_orf '%s' " +
                     "starts with '%s'. " +
-                    "NT has start, but AA doesn't." ,
+                    "NT has start, but AA doesn't. Skipping." ,
                     aln_head,
                     c,
                     nt_head,
                     nt_orf[0..2].join
+          skip_count += 1
+          seq_bad = true
+          break
         elsif AA_SET.include? c
           these_three = nt_orf.shift(3).join ""
           Utils.assert these_three.length == 3,

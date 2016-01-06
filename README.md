@@ -45,3 +45,8 @@ plausibility.
 ## Codon table ##
 
 Link to [codon table](http://www.cbs.dtu.dk/courses/27619/codon.html)
+
+## TODO ##
+
+- Currently only accepts line feeds as line endings
+- Some output seqs have three less nucleotides
