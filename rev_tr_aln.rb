@@ -305,6 +305,10 @@ end
 
 Utils.log "%d sequences that had matches were skipped", skip_count
 
+if nt_aln_seq_lens.empty?
+  abort "ERROR: No aligned seqs!"
+end
+
 nt_aln_seq_len = nt_aln_seq_lens.first
 
 Utils.log "Output alignment length: %d", nt_aln_seq_len
